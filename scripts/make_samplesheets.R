@@ -43,7 +43,25 @@ paths_cram <- str_c(
   sep = ""
 )
 
-#### TODO: FastQ paths
+paths_fastq_dir <- str_c(
+  "/scratch/",
+  project,
+  "/",
+  username,
+  "/roche_fastq/reads/",
+  sep = ""
+)
+
+paths_fastq_files <- str_c(
+  "/scratch/",
+  project,
+  "/",
+  username,
+  "/roche_fastq/reads/",
+  samples,
+  "_other.fq.gz",
+  sep = ""
+)
 
 # Build nf-core/bamtofastq sample sheet
 # Columns specs: sample_id, mapped, index, filetype
@@ -54,7 +72,16 @@ sample_sheet_bamtofastq <- data.frame(
   mutate(index = NA, file_type = "cram")
 
 # Build nf-core/seqinspector sample sheet
-# TODO!!!
+# Column specs: sample_id, fastq_1, fastq_2, rundir, tags
+sample_sheet_seqinspector <- data.frame(
+  sample = samples,
+  fastq_1 = paths_fastq_files
+) |>
+  mutate(
+    fastq_2 = NA,
+    rundir = paths_fastq_dir,
+    tags = NA
+  )
 
 # Export files
 ## bamtofastq
@@ -65,3 +92,8 @@ write_csv(
 )
 
 ## seqinspector
+write_csv(
+  sample_sheet_seqinspector,
+  na = "",
+  here("data/sample_sheet_seqinspector.csv")
+)
