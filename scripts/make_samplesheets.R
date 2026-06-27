@@ -17,10 +17,7 @@ username <- "nghiaagent"
 # Define samples that are in use at the moment
 samples <- c(
   "50918036C_HPSID_002_L1",
-  "50918124C_HPSID_004_L1",
-  "50918402C_HPSID_005_L1",
-  "50918538C_HPSID_006_L1",
-  "50918870C_HPSID_007_L1"
+  "50918124C_HPSID_004_L1"
 )
 
 folders <- str_remove(samples, "_L1")
