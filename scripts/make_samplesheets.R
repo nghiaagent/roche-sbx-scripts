@@ -83,6 +83,18 @@ sample_sheet_seqinspector <- data.frame(
     tags = NA
   )
 
+# Build nf-core/mag sample sheet
+# Column specs: sample,group,short_reads_1,short_reads_2,long_reads,short_reads_platform,long_reads_platform
+sample_sheet_mag <- data.frame(
+  sample = samples,
+  group = 0,
+  short_reads_1 = paths_fastq_files,
+  short_reads_2 = NA,
+  long_reads = NA,
+  short_reads_platform = "Illumina",
+  long_reads_platform = NA
+)
+
 # Export files
 ## bamtofastq
 write_csv(
@@ -96,4 +108,11 @@ write_csv(
   sample_sheet_seqinspector,
   na = "",
   here("data/sample_sheet_seqinspector.csv")
+)
+
+## mag
+write_csv(
+  sample_sheet_mag,
+  na = "",
+  here("data/sample_sheet_mag.csv")
 )
