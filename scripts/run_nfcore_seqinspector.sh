@@ -13,4 +13,4 @@ export NXF_SINGULARITY_CACHEDIR="${MYSCRATCH}/.nextflow_singularity"
 export SINGULARITY_CACHEDIR="${MYSCRATCH}/.singularity"
 
 # Execute Nextflow job
-./nextflow run nf-core/seqinspector -r 1.0.0 -profile singularity,pawsey_setonix -c ./nextflow.config --input "${PWD}/data/sample_sheet_seqinspector.csv" --outdir "${MYSCRATCH}/roche_fastq_seqinspector"
+./nextflow run nf-core/seqinspector -r 1.0.0 -profile singularity,pawsey_setonix -c ./nextflow.config --input "${PWD}/data/sample_sheet_seqinspector.csv" --outdir "${MYSCRATCH}/roche_fastq_seqinspector" --skip_tools bwamem2_index,bwamem2_mem,picard_collectmultiplemetrics,rundirparser
