@@ -91,7 +91,7 @@ sample_sheet_mag <- data.frame(
   short_reads_1 = paths_fastq_files,
   short_reads_2 = NA,
   long_reads = NA,
-  short_reads_platform = "Illumina",
+  short_reads_platform = "ILLUMINA",
   long_reads_platform = NA
 )
 
