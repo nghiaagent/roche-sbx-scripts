@@ -14,41 +14,31 @@ library(here)
 project <- "pawsey1172"
 username <- "nghiaagent"
 
-# Define samples that are in use at the moment
-samples <- c(
-  "50918036C_HPSID_002_L1",
-  "50918124C_HPSID_004_L1"
-)
+# Read list of existing CRAM files on Setonix
+existing_crams <- read_lines(here("data/existing_crams.txt"))
+
+# Extract samples from existing CRAM paths (basename without extension)
+samples <- existing_crams |>
+  basename()
+ |> str_remove("\\.cram$")
+
+# Check that all found samples are present in our local sample sheet metadata
+sample_sheet <- read_csv(here("data/sample_sheet.csv"))
+if (!all(samples %in% sample_sheet$sample_name)) {
+  stop("Some CRAM samples found on Setonix are not in the local sample_sheet.csv metadata")
+}
 
 folders <- str_remove(samples, "_L1")
 
-# Check that all samples are present
-sample_sheet <- read_csv(here("data/sample_sheet.csv"))
-
-if (!all(samples %in% sample_sheet$sample_name)) {
-  stop("One or more samples are not present in provided sample sheet")
-}
-
-# Calculate paths to where files should be ($MYSCRATCH/roche and $MYSCRATCH/roche_fastq)
-paths_cram <- str_c(
-  "/scratch/",
-  project,
-  "/",
-  username,
-  "/roche/",
-  folders,
-  "/",
-  samples,
-  ".cram",
-  sep = ""
-)
+# Use paths directly from existing crams list
+paths_cram <- existing_crams
 
 paths_fastq_dir <- str_c(
   "/scratch/",
   project,
   "/",
   username,
-  "/roche_fastq/reads/",
+  "/roche_sbxmag/reads/",
   sep = ""
 )
 
@@ -57,13 +47,13 @@ paths_fastq_files <- str_c(
   project,
   "/",
   username,
-  "/roche_fastq/reads/",
+  "/roche_sbxmag/reads/",
   samples,
   "_other.fq.gz",
   sep = ""
 )
 
-# Build nf-core/bamtofastq sample sheet
+# Build nf-core/bamtofastq and nghiaagent/sbxmag sample sheet
 # Columns specs: sample_id, mapped, index, filetype
 sample_sheet_bamtofastq <- data.frame(
   sample_id = samples,
@@ -96,7 +86,7 @@ sample_sheet_mag <- data.frame(
 )
 
 # Export files
-## bamtofastq
+## bamtofastq and sbxmag
 write_csv(
   sample_sheet_bamtofastq,
   na = "",
