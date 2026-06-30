@@ -1,0 +1,3 @@
+[submodule "workflows/sbxmag"]
+	path = workflows/sbxmag
+	url = https://github.com/nghiaagent/sbxmag
