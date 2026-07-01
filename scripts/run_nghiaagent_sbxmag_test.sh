@@ -2,7 +2,7 @@
 # Log in to setonix-workflow then run it interactively.
 
 # Load modules
-module load singularity/4.1.0-slurm
+module load singularity/4.1.0-slurm rclone/1.68.1
 # Make bundled Nextflow executable
 chmod +x ./nextflow
 
@@ -43,4 +43,4 @@ fi
 # rclone copy remote:path/to/reference "${MYSCRATCH}/reference/"
 
 # Execute Nextflow job
-./nextflow run workflows/sbxmag/main.nf -profile singularity,pawsey_setonix -resume -c ./nextflow.config --input "${PWD}/data/sample_sheet_bamtofastq_test.csv" --outdir "${MYSCRATCH}/roche_sbxmag" --fasta "${MYSCRATCH}/reference/Homo_sapiens.GRCh38_15_plus_hs38d1.fa" --deacon_index "${MYSCRATCH}/deacon_index/panhuman-1.k31w15.idx"
+./nextflow run workflows/sbxmag/main.nf -profile singularity,pawsey_setonix -resume -c ./nextflow.config --input "${PWD}/data/sample_sheet_bamtofastq_test.csv" --outdir "${MYSCRATCH}/roche_sbxmag" --fasta "${MYSCRATCH}/reference/Homo_sapiens.GRCh38_15_plus_hs38d1.fa" --deacon_index "${MYSCRATCH}/deacon_index/panhuman-1.k31w15.idx" --sylph_profile_index "${MYSCRATCH}/sylph_databases/gtdb_95_DB/gtdb-r220-c200-dbv1.syldb" --sylph_query_index "${MYSCRATCH}/sylph_databases/gtdb_99_ordered_DB/gtdb_ordered_99.syldb"
