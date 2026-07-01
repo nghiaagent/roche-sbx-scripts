@@ -19,8 +19,8 @@ existing_crams <- read_lines(here("data/existing_crams.txt"))
 
 # Extract samples from existing CRAM paths (basename without extension)
 samples <- existing_crams |>
-  basename()
- |> str_remove("\\.cram$")
+  basename() |>
+  str_remove("\\.cram$")
 
 # Check that all found samples are present in our local sample sheet metadata
 sample_sheet <- read_csv(here("data/sample_sheet.csv"))
@@ -61,6 +61,9 @@ sample_sheet_bamtofastq <- data.frame(
 ) |>
   mutate(index = NA, file_type = "cram")
 
+## Build testing sample sheet of first 2 samples 
+sample_sheet_bamtofastq_test <- sample_sheet_bamtofastq[1:2,]
+
 # Build nf-core/seqinspector sample sheet
 # Column specs: sample_id, fastq_1, fastq_2, rundir, tags
 sample_sheet_seqinspector <- data.frame(
@@ -91,6 +94,12 @@ write_csv(
   sample_sheet_bamtofastq,
   na = "",
   here("data/sample_sheet_bamtofastq.csv")
+)
+
+write_csv(
+  sample_sheet_bamtofastq_test,
+  na = "",
+  here("data/sample_sheet_bamtofastq_test.csv")
 )
 
 ## seqinspector
